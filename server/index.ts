@@ -1,7 +1,16 @@
 import { AppDataSource } from "./src/data-source";
-const app = require("express")();
+import { roomHandler } from "./src/util/util";
+const express = require("express");
+const app = express();
+const cors = require("cors");
 const server = require("http").createServer(app);
-const io = require("socket.io")(server, {
+const { Server } = require("socket.io");
+require("dotenv").config();
+
+app.use(cors());
+app.use(express.json());
+
+const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
@@ -10,10 +19,11 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.emit("me", socket.id);
+  console.log("User is connected on socket ", socket.id);
   socket.on("disconnect", () => {
-    socket.broadcast.emit("callEnded");
+    console.log("User disconnected");
   });
+  roomHandler(socket);
 });
 
 (async () => {

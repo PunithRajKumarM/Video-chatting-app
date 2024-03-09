@@ -1,0 +1,12 @@
+#call {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+#video {
+  border: 1px solid white;
+}
