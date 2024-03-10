@@ -29,8 +29,8 @@ io.on("connection", (socket) => {
 (async () => {
   try {
     await AppDataSource.initialize();
-    server.listen(8000, () => {
-      console.log("Server is listening on the port ", 8000);
+    server.listen(5050, () => {
+      console.log("Server is listening on the port ", 5050);
     });
   } catch (error) {
     console.log("Failed to connect the database ", error);
