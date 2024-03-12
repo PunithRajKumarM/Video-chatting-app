@@ -1,29 +1,50 @@
-import { AppBar, Button, Divider, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Divider,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import styles from "./Home.module.css";
 import CreateMeeting from "../CreateMeeting/CreateMeeting";
 import JoinMeeting from "../JoinMeeting/JoinMeeting";
 import { useState } from "react";
 // import VideoChatIcon from "@mui/icons-material/VideoChat";
 import VideocamIcon from "@mui/icons-material/Videocam";
+import { useNavigate } from "react-router-dom";
 
 const buttonStyle = {
-  bgcolor: "white",
-  color: "rgb(25, 118, 210)",
+  bgcolor: "rgb(42, 42, 54)",
   fontWeight: "600",
   "&:hover": {
-    background: "whitesmoke",
+    background: "rgb(56,56,80)",
   },
+  py: 2,
+  px: 3,
 };
 
 export default function Home() {
   const [meeting, setMeeting] = useState<string>("");
+  const [joinUrl, setJoinUrl] = useState<string>("");
+  const navigate = useNavigate();
 
   const username = JSON.parse(
     sessionStorage.getItem("videoChatUser") as string
   ).name;
 
+  // function joinMeetingHandler() {
+  //   setMeeting("openJoinMeeting");
+  // }
+
   function joinMeetingHandler() {
-    setMeeting("openJoinMeeting");
+    if (!joinUrl) {
+      alert("Enter url to join");
+      return;
+    }
+    console.log(joinUrl);
+
+    navigate(`/room/${joinUrl}`);
   }
 
   function createMeetingHandler() {
@@ -54,7 +75,7 @@ export default function Home() {
         </AppBar>
 
         <div id={styles.meeting}>
-          <Toolbar
+          {/* <Toolbar
             sx={{
               borderRadius: 4,
               textAlign: "center",
@@ -92,6 +113,40 @@ export default function Home() {
                 Create Meeting
               </Button>
             </Toolbar>
+          </Toolbar> */}
+          <Toolbar
+            sx={{
+              width: "40%",
+              textAlign: "center",
+              color: "rgb(42, 42, 54)",
+            }}
+          >
+            <Typography variant="h4">
+              Video calls and meetings for everyone
+            </Typography>
+          </Toolbar>
+          <Toolbar
+            sx={{
+              gap: 5,
+            }}
+          >
+            <Button
+              sx={buttonStyle}
+              variant="contained"
+              onClick={createMeetingHandler}
+            >
+              Create Meeting
+            </Button>
+
+            <TextField
+              label="Enter a code"
+              onChange={(e) => setJoinUrl(e.target.value)}
+              value={joinUrl}
+            />
+
+            <Button disabled={!joinUrl} onClick={joinMeetingHandler}>
+              Join
+            </Button>
           </Toolbar>
         </div>
       </div>
@@ -101,12 +156,12 @@ export default function Home() {
           close={closeMeeting}
         />
       }
-      {
+      {/* {
         <JoinMeeting
           open={meeting === "openJoinMeeting"}
           close={closeMeeting}
         />
-      }
+      } */}
     </>
   );
 }

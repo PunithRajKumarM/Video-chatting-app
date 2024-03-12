@@ -74,7 +74,7 @@ export default function MessageField({
             autoFocus
           />
           <button
-            style={{ backgroundColor: `rgb(25,118,210)`, color: "white" }}
+            style={{ backgroundColor: `rgb(56,56,80)`, color: "white" }}
             onClick={submitMessageHandler}
             disabled={!message}
           >

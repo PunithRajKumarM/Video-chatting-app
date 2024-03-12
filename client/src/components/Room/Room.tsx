@@ -39,35 +39,14 @@ export default function Call() {
             <VideoStream stream={peer.stream} key={i} />
           ))}
         </div>
-
-        <div id={styles.bottomBar}>
-          {/* <BottomNavigation
-          sx={{ bgcolor: "black", color: "white" }}
-          showLabels
-          value={buttonValue}
-          onChange={(_: any, newValue: any) => {
-            setChatValue(newValue);
-          }}
-        >
-          <BottomNavigationAction
-            label="Chat"
-            onClick={() => setOpenChat(true)}
-            icon={<ChatBubbleIcon sx={{ color: "dodgerblue" }} />}
-          />
-          <BottomNavigationAction
-            label="Leave"
-            icon={<ChatBubbleIcon sx={{ color: "red" }} />}
-          />
-        </BottomNavigation> */}
-        </div>
       </div>
       <div id={styles.bottomBar}>
         <div className={styles.bottomBarBtn} onClick={() => setOpenChat(true)}>
-          <ChatBubbleIcon sx={{ color: "antiquewhite" }} />
+          <ChatBubbleIcon sx={{ color: "rgb(236, 236, 236)" }} />
           <p>Chat</p>
         </div>
         <button className={styles.leaveBtn}>
-          <CallEndIcon sx={{ color: "antiquewhite" }} />
+          <CallEndIcon sx={{ color: "rgb(236, 236, 236)" }} />
         </button>
       </div>
     </div>

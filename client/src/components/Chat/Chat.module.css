@@ -14,18 +14,18 @@
 .chatWrapper .userName,
 .chatWrapper.you .userName {
   font-size: x-small;
-  color: rgb(25, 118, 210);
+  color: rgb(56,56,80);
   font-weight: 500;
 }
 
 .chatWrapper .messageContent {
   font-size: smaller;
   display: inline-block;
-  border: 1px solid rgb(25, 118, 210);
+  border: 1px solid rgb(56,56,80);
   border-radius: 0 10px 10px 10px;
   max-width: 50%;
   padding: 0.25rem 1rem;
-  background-color: rgb(25, 118, 210);
+  background-color: rgb(56,56,80);
   color: white;
 }
 
