@@ -44,6 +44,7 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
   const enterRoom = ({ roomId }: { roomId: string }) => {
     console.log(roomId);
     navigate(`/room/${roomId}`);
+    navigate(0);
   };
 
   const removePeer = (peerId: string) => {

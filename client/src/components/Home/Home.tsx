@@ -45,6 +45,7 @@ export default function Home() {
     console.log(joinUrl);
 
     navigate(`/room/${joinUrl}`);
+    navigate(0);
   }
 
   function createMeetingHandler() {
@@ -139,11 +140,11 @@ export default function Home() {
             </Button>
 
             <TextField
-              label="Enter a code"
+              placeholder="Enter a code"
               onChange={(e) => setJoinUrl(e.target.value)}
               value={joinUrl}
             />
-
+            
             <Button disabled={!joinUrl} onClick={joinMeetingHandler}>
               Join
             </Button>

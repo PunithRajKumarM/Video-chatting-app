@@ -26,7 +26,16 @@ export default function CreateMeeting({ open, close }) {
           <DatePicker label="Select date" />
           <TimePicker label="AM / PM" ampm />
         </LocalizationProvider>
-        <Button onClick={createRoom} variant="contained">
+        <Button
+          sx={{
+            bgcolor: "rgb(42,42,54)",
+            "&:hover": {
+              background: "rgb(56,56,80)",
+            },
+          }}
+          onClick={createRoom}
+          variant="contained"
+        >
           Submit
         </Button>
       </Toolbar>
