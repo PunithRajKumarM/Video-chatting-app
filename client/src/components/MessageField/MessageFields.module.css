@@ -1,0 +1,39 @@
+#messages {
+  height: 100vh;
+  padding: 0.5rem;
+  background-color: black;
+}
+
+#messageField {
+  height: calc(100vh - 4rem);
+  border: 1px solid;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  overflow: scroll;
+  background-color: white;
+}
+
+#messageField::-webkit-scrollbar {
+  display: none;
+}
+
+#textField {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 2rem;
+}
+#textField input {
+  padding: 0.5rem;
+  flex: 3;
+  outline: none;
+  border: none;
+}
+
+#textField button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0.4;
+}

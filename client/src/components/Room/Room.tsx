@@ -5,58 +5,70 @@ import { RoomContext } from "../Context/RoomProvider";
 import VideoStream from "../Video/VideoStream";
 import { PeerState } from "../../Actions/peerReducer";
 import { Drawer } from "@mui/material";
+// import BottomNavigation from "@mui/material/BottomNavigation";
+// import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import CallEndIcon from "@mui/icons-material/CallEnd";
+import MessageField from "../MessageField/MessageField";
 
 export default function Call() {
   const [openChat, setOpenChat] = useState<boolean>(false);
+  const [buttonValue, setChatValue] = useState(0);
   const { id } = useParams();
+
   const { ws, me, stream, peers, shareScreen } = useContext(RoomContext);
-  const size = "2rem";
 
   useEffect(() => {
     if (me) ws.emit("join-room", { roomId: id, peerId: me._id });
   }, [id, ws, me]);
 
   return (
-    <div id={styles.call}>
-      <p>Room id : {id}</p>
-      <button onClick={() => setOpenChat(true)}>Chat</button>
-      <button onClick={shareScreen}>Share Screen</button>
-      <div
-        style={{
-          display: "flex",
-          gap: "1rem",
-        }}
-      >
+    <div id={styles.wrapper}>
+      <div id={styles.call}>
         <Drawer
           anchor="right"
           open={openChat}
           onClose={() => setOpenChat(false)}
         >
-          <div style={{ width: "50vw", height: "100vh" }}>
-            <div
-              style={{
-                border: "1px solid black",
-                height: `calc(100vh - ${size})`,
-              }}
-            ></div>
-            <div
-              style={{
-                height: "2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <input type="text" />
-              <button>Send</button>
-            </div>
-          </div>
+          <MessageField roomId={id} />
         </Drawer>
-        <VideoStream stream={stream} />
-        {Object.values(peers as PeerState).map((peer, i) => (
-          <VideoStream stream={peer.stream} key={i} />
-        ))}
+
+        <div id={styles.videoWrapper}>
+          <VideoStream stream={stream} />
+          {Object.values(peers as PeerState).map((peer, i) => (
+            <VideoStream stream={peer.stream} key={i} />
+          ))}
+        </div>
+
+        <div id={styles.bottomBar}>
+          {/* <BottomNavigation
+          sx={{ bgcolor: "black", color: "white" }}
+          showLabels
+          value={buttonValue}
+          onChange={(_: any, newValue: any) => {
+            setChatValue(newValue);
+          }}
+        >
+          <BottomNavigationAction
+            label="Chat"
+            onClick={() => setOpenChat(true)}
+            icon={<ChatBubbleIcon sx={{ color: "dodgerblue" }} />}
+          />
+          <BottomNavigationAction
+            label="Leave"
+            icon={<ChatBubbleIcon sx={{ color: "red" }} />}
+          />
+        </BottomNavigation> */}
+        </div>
+      </div>
+      <div id={styles.bottomBar}>
+        <div className={styles.bottomBarBtn} onClick={() => setOpenChat(true)}>
+          <ChatBubbleIcon sx={{ color: "antiquewhite" }} />
+          <p>Chat</p>
+        </div>
+        <button className={styles.leaveBtn}>
+          <CallEndIcon sx={{ color: "antiquewhite" }} />
+        </button>
       </div>
     </div>
   );

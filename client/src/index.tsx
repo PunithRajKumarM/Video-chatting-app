@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./components/App/App";
-import Home from "./components/Home/Home";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Room from "./components/Room/Room";
 import { RoomProvider } from "./components/Context/RoomProvider";
@@ -23,7 +22,6 @@ root.render(
       <RoomProvider>
         <Routes>
           <Route path={"/"} element={<App />} />
-          <Route path={"/home"} element={<Home />} />
           <Route path={"/room/:id"} element={<Room />} />
         </Routes>
       </RoomProvider>

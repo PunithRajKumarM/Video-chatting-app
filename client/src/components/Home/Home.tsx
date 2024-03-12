@@ -1,8 +1,19 @@
-import { Box, Button, Typography } from "@mui/material";
+import { AppBar, Button, Divider, Toolbar, Typography } from "@mui/material";
 import styles from "./Home.module.css";
 import CreateMeeting from "../CreateMeeting/CreateMeeting";
 import JoinMeeting from "../JoinMeeting/JoinMeeting";
 import { useState } from "react";
+// import VideoChatIcon from "@mui/icons-material/VideoChat";
+import VideocamIcon from "@mui/icons-material/Videocam";
+
+const buttonStyle = {
+  bgcolor: "white",
+  color: "rgb(25, 118, 210)",
+  fontWeight: "600",
+  "&:hover": {
+    background: "whitesmoke",
+  },
+};
 
 export default function Home() {
   const [meeting, setMeeting] = useState<string>("");
@@ -26,44 +37,62 @@ export default function Home() {
   return (
     <>
       <div id={styles.home}>
-        <Typography
-          variant="h5"
-          height={"10rem"}
+        <AppBar
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
+            fontWeight: 600,
+            bgcolor: "rgb(42,42,54)",
           }}
         >
-          Hello {username}!!
-        </Typography>
-        <div id={styles.meeting}>
-          <Typography
-            variant="h5"
-            component={"p"}
-            sx={{ m: 1, textAlign: "center" }}
-          >
-            Meeting
-          </Typography>
-          <Box
+          <Toolbar
             sx={{
-              p: "2rem",
-              border: "2px solid grey",
-              borderRadius: 2,
-              textAlign: "center",
+              justifyContent: "space-between",
             }}
           >
-            <Button variant="contained" onClick={joinMeetingHandler}>
-              Join Meeting
-            </Button>
-            <Typography sx={{ m: 1 }} component={"p"}>
-              or
+            <VideocamIcon />
+            <Typography>Hello {username}</Typography>
+          </Toolbar>
+        </AppBar>
+
+        <div id={styles.meeting}>
+          <Toolbar
+            sx={{
+              borderRadius: 4,
+              textAlign: "center",
+              p: "2rem",
+              flexDirection: "column",
+              bgcolor: "rgb(25, 118, 210)",
+            }}
+          >
+            <Typography
+              variant="h5"
+              component={"p"}
+              sx={{
+                m: 1,
+                textAlign: "center",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Meeting
             </Typography>
-            <Button variant="contained" onClick={createMeetingHandler}>
-              Create Meeting
-            </Button>
-          </Box>
+            <Toolbar sx={{ gap: 2 }}>
+              <Button
+                sx={buttonStyle}
+                variant="contained"
+                onClick={joinMeetingHandler}
+              >
+                Join Meeting
+              </Button>
+              <Divider orientation="vertical" />
+              <Button
+                sx={buttonStyle}
+                variant="contained"
+                onClick={createMeetingHandler}
+              >
+                Create Meeting
+              </Button>
+            </Toolbar>
+          </Toolbar>
         </div>
       </div>
       {

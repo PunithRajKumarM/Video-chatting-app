@@ -1,5 +1,10 @@
 import { FC, useEffect, useRef } from "react";
 
+const participants =
+  JSON.parse(localStorage.getItem("participants") as string) || [];
+const videoSize = participants.length > 1 ? "40%" : "100%";
+console.log(videoSize);
+
 const VideoStream: FC<{ stream: MediaStream }> = ({ stream }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -8,16 +13,7 @@ const VideoStream: FC<{ stream: MediaStream }> = ({ stream }) => {
   }, [stream]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        width: "50%",
-      }}
-    >
-      <video style={{ width: "100%" }} ref={videoRef} autoPlay muted={true} />
-    </div>
+    <video style={{ width: videoSize }} ref={videoRef} autoPlay muted={true} />
   );
 };
 
