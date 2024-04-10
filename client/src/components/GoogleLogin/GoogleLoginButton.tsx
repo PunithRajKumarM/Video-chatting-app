@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -24,19 +23,24 @@ export default function GoogleLoginButton() {
     }
   };
   return (
-    <Button
-      sx={{ mt: "1rem", boxShadow: "0px 0px 2px dodgerblue" }}
-      variant="contained"
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "1rem",
+        flexWrap: "wrap",
+      }}
     >
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           googleLoginHandler(credentialResponse);
-          navigate("/home");
+          navigate(0);
         }}
         onError={() => {
           console.log("Login Failed");
         }}
       />
-    </Button>
+    </div>
   );
 }

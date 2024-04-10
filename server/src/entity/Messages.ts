@@ -1,11 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-export class Notification {
+export class Messages {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
   email: string;
   @Column()
-  notification: string;
+  name: string;
+  @Column()
+  message: string;
+  @Column()
+  roomId: string;
 }

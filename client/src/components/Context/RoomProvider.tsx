@@ -30,14 +30,21 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [peers, dispatch] = useReducer(peersReducer, {});
   const [screenSharingId, setScreenSharingId] = useState("");
+  const [roomParticipants, setRoomParticipants] = useState<string[]>([]);
+  // const [peerConnections, setPeerConnections] = useState<DataConnection | null>(
+  //   null
+  // );
 
   const getUsers = ({ participants }: { participants: string[] }) => {
     console.log("participants", participants);
+    setRoomParticipants(participants);
+    localStorage.setItem("participants", JSON.stringify(participants));
   };
 
   const enterRoom = ({ roomId }: { roomId: string }) => {
     console.log(roomId);
     navigate(`/room/${roomId}`);
+    navigate(0);
   };
 
   const removePeer = (peerId: string) => {
@@ -47,20 +54,6 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
   function switchSharing(stream: MediaStream) {
     setStream(stream);
     setScreenSharingId(me?.id || "");
-  }
-
-  function shareScreen() {
-    if (screenSharingId) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then(switchSharing)
-        .catch((err) => console.log("Failed to play video", err));
-    } else {
-      navigator.mediaDevices
-        .getDisplayMedia({ video: true, audio: true })
-        .then(switchSharing)
-        .catch((err) => console.log("Failed to share screen", err));
-    }
   }
 
   useEffect(() => {
@@ -87,6 +80,10 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
   }, []);
 
   useEffect(() => {
+    console.log(`Participants are ${roomParticipants}`);
+  }, [roomParticipants]);
+
+  useEffect(() => {
     if (!me) return;
     if (!stream) return;
 
@@ -105,6 +102,32 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
     });
   }, [me, stream]);
   // console.log(peers);
+
+  function shareScreen() {
+    if (screenSharingId) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then(switchSharing)
+        .catch((err) => console.log("Failed to play video", err));
+    } else {
+      navigator.mediaDevices
+        .getDisplayMedia({ video: true, audio: true })
+        .then(switchSharing)
+        .catch((err) => console.log("Failed to share screen", err));
+    }
+
+    console.log(peers.connections);
+
+    // Object.values(me?.connections)).forEach((connection: any) => {
+    //   const videoTrack = stream
+    //     ?.getTracks()
+    //     .find((track) => track.kind === "video");
+    //   connection[0].peerConnections
+    //     .getSenders()[1]
+    //     .replaceTrack(videoTrack)
+    //     .catch((err: any) => console.log(err));
+    // });
+  }
 
   return (
     <RoomContext.Provider value={{ ws, me, stream, peers, shareScreen }}>

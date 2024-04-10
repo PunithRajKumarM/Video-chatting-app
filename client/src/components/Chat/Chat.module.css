@@ -1,0 +1,34 @@
+.chatWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0.4rem;
+  justify-content: center;
+  align-items: start;
+}
+
+.chatWrapper.you {
+  align-items: end;
+}
+
+.chatWrapper .userName,
+.chatWrapper.you .userName {
+  font-size: x-small;
+  color: rgb(56,56,80);
+  font-weight: 500;
+}
+
+.chatWrapper .messageContent {
+  font-size: smaller;
+  display: inline-block;
+  border: 1px solid rgb(56,56,80);
+  border-radius: 0 10px 10px 10px;
+  max-width: 50%;
+  padding: 0.25rem 1rem;
+  background-color: rgb(56,56,80);
+  color: white;
+}
+
+.chatWrapper.you .messageContent {
+  border-radius: 10px 0px 10px 10px;
+}
