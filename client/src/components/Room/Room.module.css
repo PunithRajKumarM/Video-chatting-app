@@ -25,9 +25,9 @@
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(42, 42, 54);
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .bottomBarBtn {
@@ -45,7 +45,7 @@
 }
 
 .leaveBtn {
-  background-color: red;
+  background-color: rgb(189, 39, 56);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,3 +55,5 @@
   cursor: pointer;
   border-radius: 8px;
 }
+
+

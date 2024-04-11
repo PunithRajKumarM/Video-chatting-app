@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./Room.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RoomContext } from "../Context/RoomProvider";
 import VideoStream from "../Video/VideoStream";
 import { PeerState } from "../../Actions/peerReducer";
@@ -13,14 +13,21 @@ import MessageField from "../MessageField/MessageField";
 
 export default function Call() {
   const [openChat, setOpenChat] = useState<boolean>(false);
-  const [buttonValue, setChatValue] = useState(0);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { ws, me, stream, peers, shareScreen } = useContext(RoomContext);
+  const { ws, me, stream, peers } = useContext(RoomContext);
 
   useEffect(() => {
     if (me) ws.emit("join-room", { roomId: id, peerId: me._id });
   }, [id, ws, me]);
+
+  const leaveRoomHandler = () => {
+    if (me) {
+      ws.emit("leave-room", { roomId: id, peerId: me._id });
+      navigate("/");
+    }
+  };
 
   return (
     <div id={styles.wrapper}>
@@ -45,7 +52,7 @@ export default function Call() {
           <ChatBubbleIcon sx={{ color: "rgb(236, 236, 236)" }} />
           <p>Chat</p>
         </div>
-        <button className={styles.leaveBtn}>
+        <button className={styles.leaveBtn} onClick={leaveRoomHandler}>
           <CallEndIcon sx={{ color: "rgb(236, 236, 236)" }} />
         </button>
       </div>

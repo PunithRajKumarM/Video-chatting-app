@@ -9,10 +9,11 @@ import {
 import styles from "./Home.module.css";
 import CreateMeeting from "../CreateMeeting/CreateMeeting";
 import JoinMeeting from "../JoinMeeting/JoinMeeting";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import VideoChatIcon from "@mui/icons-material/VideoChat";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { useNavigate } from "react-router-dom";
+import { RoomContext } from "../Context/RoomProvider";
 
 const buttonStyle = {
   bgcolor: "rgb(42, 42, 54)",
@@ -20,6 +21,7 @@ const buttonStyle = {
   "&:hover": {
     background: "rgb(56,56,80)",
   },
+  border: "none",
   py: 2,
   px: 3,
 };
@@ -27,7 +29,17 @@ const buttonStyle = {
 export default function Home() {
   const [meeting, setMeeting] = useState<string>("");
   const [joinUrl, setJoinUrl] = useState<string>("");
+  const [roomId, setRoomId] = useState<string>("");
   const navigate = useNavigate();
+  const { ws } = useContext(RoomContext);
+
+  useEffect(() => {
+    ws.emit("generate-roomId");
+    ws.on("generated-roomId", ({ roomId }: { roomId: string }) => {
+      setRoomId(roomId);
+      console.log("RoomId", roomId);
+    });
+  }, []);
 
   const username = JSON.parse(
     sessionStorage.getItem("videoChatUser") as string
@@ -117,7 +129,7 @@ export default function Home() {
           </Toolbar> */}
           <Toolbar
             sx={{
-              width: "40%",
+              width: "50%",
               textAlign: "center",
               color: "rgb(42, 42, 54)",
             }}
@@ -128,7 +140,8 @@ export default function Home() {
           </Toolbar>
           <Toolbar
             sx={{
-              gap: 5,
+              gap: 1,
+              flexDirection: "column",
             }}
           >
             <Button
@@ -138,21 +151,52 @@ export default function Home() {
             >
               Create Meeting
             </Button>
-
-            <TextField
-              placeholder="Enter a code"
-              onChange={(e) => setJoinUrl(e.target.value)}
-              value={joinUrl}
-            />
-            
-            <Button disabled={!joinUrl} onClick={joinMeetingHandler}>
-              Join
-            </Button>
+            <Typography variant="h6" sx={{ color: "rgb(42, 42, 54)" }}>
+              or
+            </Typography>
+            <div id={styles.joinBtn}>
+              <TextField
+                sx={{
+                  borderRadius: "0px",
+                }}
+                placeholder="Enter a code"
+                onChange={(e) => setJoinUrl(e.target.value)}
+                value={joinUrl}
+                InputProps={{
+                  style: {
+                    height: "auto",
+                    flex: "1",
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  },
+                }}
+              />
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "rgb(42, 42, 54)",
+                  fontWeight: "600",
+                  "&:hover": {
+                    background: "rgb(56,56,80)",
+                  },
+                  py: 2,
+                  px: 3,
+                  border: "none",
+                  borderTopLeftRadius: "0px",
+                  borderBottomLeftRadius: "0px",
+                }}
+                disabled={!joinUrl}
+                onClick={joinMeetingHandler}
+              >
+                Join
+              </Button>
+            </div>
           </Toolbar>
         </div>
       </div>
       {
         <CreateMeeting
+          roomId={roomId}
           open={meeting === "openCreateMeeting"}
           close={closeMeeting}
         />

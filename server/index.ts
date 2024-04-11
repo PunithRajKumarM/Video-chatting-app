@@ -1,4 +1,8 @@
-import { getAllMessages, sendMessage } from "./src/controllers/controllers";
+import {
+  getAllMessages,
+  sendMailToRecipient,
+  sendMessage,
+} from "./src/controllers/controllers";
 import { AppDataSource } from "./src/data-source";
 import { roomHandler } from "./src/util/util";
 const express = require("express");
@@ -12,6 +16,8 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+
+console.log("url", process.env.CLIENT_URL);
 
 const io = new Server(server, {
   cors: {
@@ -47,3 +53,4 @@ io.on("connection", (socket) => {
 })();
 
 app.post("/room/getAllMessages", getAllMessages);
+app.post("/sendEmailToRecipient", sendMailToRecipient);

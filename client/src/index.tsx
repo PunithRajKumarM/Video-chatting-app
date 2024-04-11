@@ -6,6 +6,7 @@ import App from "./components/App/App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Room from "./components/Room/Room";
 import { RoomProvider } from "./components/Context/RoomProvider";
+import UserContextProvider from "./components/Context/UserContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,12 +20,14 @@ root.render(
     }
   >
     <BrowserRouter>
-      <RoomProvider>
-        <Routes>
-          <Route path={"/"} element={<App />} />
-          <Route path={"/room/:id"} element={<Room />} />
-        </Routes>
-      </RoomProvider>
+      <UserContextProvider>
+        <RoomProvider>
+          <Routes>
+            <Route path={"/"} element={<App />} />
+            <Route path={"/room/:id"} element={<Room />} />
+          </Routes>
+        </RoomProvider>
+      </UserContextProvider>
     </BrowserRouter>
   </GoogleOAuthProvider>
 );

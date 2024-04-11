@@ -49,6 +49,7 @@ export const RoomProvider: FunctionComponent<RoomProviderProps> = ({
 
   const removePeer = (peerId: string) => {
     dispatch(removePeerAction(peerId));
+    console.log("User left the room");
   };
 
   function switchSharing(stream: MediaStream) {
